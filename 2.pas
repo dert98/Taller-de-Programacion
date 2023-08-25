@@ -1,11 +1,11 @@
 program dos;
 type
-    propiedad = record
+    ticket = record
         cod :integer;
         tipo :integer;
         precio :real;
     end;
-    reg = record
+    producto = record
         zona :integer;
         cod :integer;
         tipo :integer;

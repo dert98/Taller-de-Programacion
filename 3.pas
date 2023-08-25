@@ -1,11 +1,11 @@
 program dos;
 type
-    propiedad = record
+    ticket = record
         cod :integer;
         tipo :integer;
         precio :real;
     end;
-    reg = record
+    producto = record
         zona :integer;
         cod :integer;
         tipo :integer;
@@ -80,13 +80,11 @@ end;
 var
     codZona;
     codPro;
-    l:lista;
+    l:listaTickets;
 begin
-    inicializar(v);
-    generar(v);
-    writeln('ingrese zona');
-    read(r.codZona);
-    writeln('ingrese tipo');
+    generar(l);
+    writeln('ingrese codigo');
     read(r.codPro);
-    retornar(codZona,codPro,v[codZona],l);
+    cantPro:=0;
+    retornar(l,cantPro);
 end
