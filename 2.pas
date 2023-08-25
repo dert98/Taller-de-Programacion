@@ -21,16 +21,16 @@ type
 var
 procedure leer(var r:reg);
 begin
-    writeln('ingrese metros')
+    writeln('ingrese metros');
     read(r.metros);
     if (r.metros <> -1) then begin
-        writeln('ingrese zona')
+        writeln('ingrese zona');
         read(r.zona);
-        writeln('ingrese  cod')
+        writeln('ingrese  cod');
         read(r. cod);
-        writeln('ingrese tipo')
+        writeln('ingrese tipo');
         read(r.tipo);
-        writeln('ingrese precioxM')
+        writeln('ingrese precioxM');
         read(r.precioxM);
     end;
 end;
