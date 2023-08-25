@@ -1,90 +1,68 @@
-program dos;
+program tres;
 type
-    ticket = record
+    producto = record
         cod :integer;
-        tipo :integer;
+        cant :integer;
         precio :real;
     end;
-    producto = record
-        zona :integer;
-        cod :integer;
-        tipo :integer;
-        metros :real;
-        precioxM :real;
+    detalle = record
+        precio:integer;
+        stock:integer;
     end;
-    lista = ^nodo
+    vector = Array[1..1000] of detalle;
+    listap = ^nodo2
+    nodo2 = record
+        dato:producto;
+        sig:listap;
+    end;
+    listat = ^nodo
     nodo = record
-        dato:propiedad;
-        sig:lista;
+        cod :integer;
+        monto:real;
+        lista :listap;
+        sig:listat;
     end;
-
 var
-procedure leer(var r:reg);
+procedure generoTicket(cod:integer, var precioTotal:real, var v:vector);
 begin
-    writeln('ingrese metros');
-    read(r.metros);
-    if (r.metros <> -1) then begin
-        writeln('ingrese zona');
-        read(r.zona);
-        writeln('ingrese  cod');
-        read(r. cod);
-        writeln('ingrese tipo');
-        read(r.tipo);
-        writeln('ingrese precioxM');
-        read(r.precioxM);
+    writeln ('ingrese cod');
+    read(cod);
+    writeln ('ingrese cant');
+    read(cant);
+    while (cod <> -1) do begin
+        precioTotal := precioTotal + (v[cod].precio * p.cant);
+        if (p.cant <= v[cod].stock ) then
+            v[cod] := v[cod] - p.cant;
+        else
+            v[cod] := 0;
+        agregarLista(l,p);
+    end;
+    writeln ('ingrese cod');
+    read(cod);
+    writeln ('ingrese cant');
+    read(cant);
+end;
+procedure generar(var lt:listat, var v:vector);
+begin
+    writeln ('ingrese cod');
+    read(cod);
+    while (p.cod <> -1) do begin
+        generoTicket(t,cod,precioTotal,v);
+        agregarListaTicket(lt,t);
+        writeln ('ingrese cod');
+        read(cod);
     end;
 end;
-procedure cargar(r:reg,var p:propiedad);
-begin
-    p.cod := r.cod;
-    p.tipo := r.tipo;
-    p.precio := (r.precioxM) * r.metros;
-end;
-procedure generar(var v:vector);
 var
-    r :reg;
-    p :propiedad;
+    v:vector;
+    lt:listat;
+    cantPro:integer;
+    codPro:integer;
 begin
-    leer(r);
-    while (r.metros <> -1) then begin
-        cargar(r,p)
-        agregarLista(v[p.zona],p);
-        leer(r);
-    end
-end;
-procedure agregarLista(var l:lista, var p:propiedad);
-var 
-    ant, act, nue:lista;
-begin
-    new(nue);
-    nue.dato := p;
-    nue.sig := nil;
-    act:=l;
-    ant:=act;
-    while (nue^.dato.cod < act^.dato.cod) do begin
-        ant:= act;
-        act:= act^.sig;
-    end
-    if (act <> nil) then
-        ant^.sig := nue; 
-    nue^.sig := act;
-end;
-procedure retornar(cz:codZona, cp:codPro, l:lista, var ln:lista);
-begin
-    while (cp < l^,dato.cod ) and (l <> nil) do 
-        l:= l^.sig
-    if (l <> nil) then
-        while (l^,dato.cod = cod) do
-            agregarLista(ln,l^.dato)
-end;
-var
-    codZona;
-    codPro;
-    l:listaTickets;
-begin
-    generar(l);
+    cargar(v); {ya se dispone}
+    generar(lt,v);
     writeln('ingrese codigo');
-    read(r.codPro);
+    read(codPro);
     cantPro:=0;
-    retornar(l,cantPro);
+    retornar(lt,cantPro,codPro);
 end
