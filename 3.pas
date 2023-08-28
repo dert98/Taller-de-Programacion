@@ -1,39 +1,43 @@
 program tres;
 type
     producto = record
-        cod :integer;
-        cant :integer;
-        precio :real;
+        cant =integer;
+        cod =integer;
+        precio =real;
     end;
     detalle = record
         precio:integer;
         stock:integer;
     end;
     vector = Array[1..1000] of detalle;
-    listap = ^nodo2
+    listap = ^nodo2;
     nodo2 = record
         dato:producto;
         sig:listap;
     end;
-    listat = ^nodo
+    listat = ^nodo;
     nodo = record
         cod :integer;
-        monto:real;
+        montototal:real;
         lista :listap;
         sig:listat;
     end;
 var
-procedure generoTicket(cod:integer, var precioTotal:real, var v:vector);
+procedure generoTicket(var t:listat; var cod:integer; var v:vector);
 begin
     writeln ('ingrese cod');
     read(cod);
     writeln ('ingrese cant');
     read(cant);
+    p.cod := cod;
     while (cod <> -1) do begin
-        precioTotal := precioTotal + (v[cod].precio * p.cant);
         if (p.cant <= v[cod].stock ) then
-            v[cod] := v[cod] - p.cant;
+        begin
+            t.montototal := t.montototal + (v[cod].precio * p.cant);
+            v[cod] := v[cod] - p.cant
+        end
         else
+            t.montototal := t.montototal + (v[cod].precio * v[cod].stock);
             v[cod] := 0;
         agregarLista(l,p);
     end;
@@ -42,12 +46,14 @@ begin
     writeln ('ingrese cant');
     read(cant);
 end;
-procedure generar(var lt:listat, var v:vector);
+procedure generar(var lt:listat; var v:vector);
+var
+    t:listat;
 begin
     writeln ('ingrese cod');
     read(cod);
     while (p.cod <> -1) do begin
-        generoTicket(t,cod,precioTotal,v);
+        generoTicket(t,cod,v);
         agregarListaTicket(lt,t);
         writeln ('ingrese cod');
         read(cod);
