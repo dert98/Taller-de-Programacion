@@ -91,4 +91,5 @@ begin
   read(num);
   if (Existe(l,num)) then
     Writeln('encontre');
+    Write('diferente al main');
 end.
