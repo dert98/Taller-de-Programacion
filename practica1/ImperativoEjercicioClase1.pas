@@ -1,3 +1,19 @@
+{Se desea procesar la información de las ventas de productos de un comercio (como máximo 50). 
+Implementar un programa que invoque los siguientes módulos:
+a. Un módulo que retorne la información de las ventas en un vector. De cada venta se conoce el día de la venta, código del producto (entre 1 y 15) y cantidad vendida
+ (como máximo 99 unidades). El código y el dia deben generarse automáticamente (random) y la cantidad se debe leer. El ingreso de las ventas finaliza con el día de venta 0 
+ (no se procesa).
+b. Un módulo que muestre el contenido del vector resultante del punto a).
+c. Un módulo que ordene el vector de ventas por código.
+d. Un módulo que muestre el contenido del vector resultante del punto c).
+e. Un módulo que elimine, del vector ordenado, las ventas con código de producto entre dos 
+valores que se ingresan como parámetros. 
+f. Un módulo que muestre el contenido del vector resultante del punto e).
+g. Un módulo que retorne la información (ordenada por código de producto de menor a mayor) 
+de cada código par de producto junto a la cantidad total de productos vendidos.
+h. Un módulo que muestre la información obtenida en el punto g).
+}
+
 program Clase1MI;
 const dimF = 50;
 type dias = 1..31;
@@ -128,13 +144,18 @@ end;
 procedure GenerarLista (v: vector; dimL: rango3; var L: lista);
 
   procedure AgregarAdelante (var L: lista; elem: venta);
+  var
+	nue:lista;
   begin
-    { Completar }
+    new (nue);
+    nue^.dato:= elem;
+    nue^.sig := l;
+    l:= nue;
   end;
   
   function Cumple (num: rango1): boolean;
   begin
-    { Completar }
+    Cumple := ((num mod 2 )= 0);
   end;
   
 var i: rango3; 
@@ -144,9 +165,21 @@ begin
     if Cumple (v[i].codigoP) then AgregarAdelante (L, v[i]);
 end; 
 
+procedure Imprimir (v:venta);
+begin
+  WriteLn('dato:', v.dia);
+  WriteLn('dato:', v.codigoP);
+  WriteLn('dato:', v.cantidad);
+end;
+
 procedure ImprimirLista (L: lista);
 begin
- { Completar }
+ while (l <> nil) do
+ begin
+  WriteLn('imprimirlista');
+   Imprimir(l^.dato);
+   l:= l^.sig;
+  end;
 end;
 
 var v: vector;
@@ -167,7 +200,7 @@ Begin
                        writeln;
                        Ordenar (v, dimL);
                        ImprimirVector (v, dimL);
-                       {write ('Ingrese valor inferior: ');
+                       write ('Ingrese valor inferior: ');
                        readln (valorInferior);
                        write ('Ingrese valor superior: ');
                        readln (valorSuperior);
@@ -186,7 +219,7 @@ Begin
                                                                 writeln;
                                                                 ImprimirLista (L);
                                                               end;
-                                          end;}
+                                          end;
                       end;
                        
 end.
