@@ -60,19 +60,24 @@ begin
         minimo(l^.sig,min);
     end;
 end;
-function buscarEnLista(l:lista;num:integer):Boolean;
+procedure buscarEnLista(l:lista;num:integer;var ok:Boolean);
 begin
-  if (l <> nil)then
+  if (l <> nil) and (not(ok)) then
     begin
       if (l^.dato = num)then
-        buscarEnLista:= true; 
-      buscarEnLista(l^.sig,num);
-    end;
+        begin
+        ok:= true;
+        end;
+      buscarEnLista(l^.sig,num,ok);
+    end
 end;
 function Existe(l:lista; num:integer):boolean;
+var
+    ok:Boolean;
 begin
-    Existe:= false;
-    Existe := (buscarEnLista(l,num));
+    ok:=false;
+    buscarEnLista(l,num,ok);
+    Existe := ok;
 end;
 var
     l:lista;
@@ -88,8 +93,10 @@ begin
   min:=9999;
   minimo(l,min);
   WriteLn('el minimo es:', min);
+  Write('ingrese un numero a buscar: ');
   read(num);
   if (Existe(l,num)) then
-    Writeln('encontre');
-    Write('diferente al main');
+    Writeln('encontre el numero ',num)
+  else
+     Writeln('no encontre el numero ',num);
 end.
