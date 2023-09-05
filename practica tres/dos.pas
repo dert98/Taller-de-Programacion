@@ -91,10 +91,12 @@ Begin
  writeln;
  writeln ('-----------------------------------------------');
  writeln;
+ writeln;
 end;
 var
 l:lista;
 a:arbol;
+
 begin
     l:= nil;
     a:= nil;
