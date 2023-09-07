@@ -61,29 +61,22 @@ Procedure InsertarElemento (var a: arbol; elem: venta);
          then InsertarElemento(a^.HI, elem)
          else InsertarElemento(a^.HD, elem); 
   End;
-procedure InformarCantidad(a:arbol);
-  procedure cantidad(a:arbol; var cant:integer);
-  begin
-    if (a <> nil) then begin
-      cant:= cant + 1;
-      WriteLn('codigo: ',a^.dato.codigo);
-      cantidad (a^.HI,cant);
-      cantidad (a^.HD,cant);
-    end;
-  end;
-var
-cant:integer;
+procedure imprimirArbol (a:arbol);
 begin
-  cant:=0;
-  cantidad(a,cant);
-  writeln('la cantidad de nodos es: ',cant);
+  if (a <> nil) then begin
+    WriteLn('el dato en el arbol es: ',a^.dato.codigo);
+    imprimirArbol (a^.HI);
+    imprimirArbol (a^.HD);
+  end;
 end;
-procedure generar(a:arbol; var l:lista);
+procedure generar(var a:arbol; l:lista);
 var unaVenta: venta;  
 Begin
+WriteLn('entro al generar');
  while (l <> nil)do
   begin
    unaVenta := l^.dato;
+   WriteLn('inserto en el arbol', unaVenta.codigo);
    InsertarElemento (a, unaVenta);
    writeln;
    l := l^.sig;
@@ -98,10 +91,10 @@ l:lista;
 a:arbol;
 
 begin
-    l:= nil;
-    a:= nil;
-    CargarL(l);
-    ImprimirListaMismoOrden(l);
-    generar(a,l);
-    InformarCantidad(a);
+  l:= nil;
+  a:= nil;
+  CargarL(l);
+  ImprimirListaMismoOrden(l);
+  generar(a,l);
+  imprimirArbol(a);
 end.
