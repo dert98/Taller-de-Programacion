@@ -73,4 +73,5 @@ begin
     a:=nil;
     a2:=nil;
     cargar(a,a2);
+    mas
 end.
