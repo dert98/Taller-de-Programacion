@@ -12,66 +12,105 @@ prestamo = record
     fecha:formatofecha;
     diasp:integer;
 end;
-arbol = ^nodoArbol;
-nodoArbol = record
-    dato: prestamo;
-    HI: arbol;
-    HD: arbol;
+lista = ^nodol;
+nodol = record
+    dato:prestamo;
+    sig:lista;
 end;
-totalp = record
+arbol = ^nodoa;
+nodoa = record
     isbn: string;
-    prestamos:arbol;
+    prestamos:lista;
     cantp:integer;
-end;
-arbolp = ^nodoArbolp;
-nodoArbolp = record
-    dato:totalp;
     HI: arbol;
     HD: arbol;
 end;
-procedure generoAp(var a:arbol2; p:prestamo);
+
+procedure enRango(a:arbol;inf:string; sup:string);
+begin
+    if (a <> nil) then
+    begin
+      if (a^.isbn > inf) then
+        begin
+        if (a^.isbn < sup) then
+        begin
+            Write('el isbn es: ',a^.isbn);
+            enRango(a^.HI,inf,sup);
+            enRango(a^.HD,inf,sup)
+        end
+        else
+          enRango(a^.HI,inf,sup)
+        end
+    else
+      enRango(a^.HD,inf,sup);
+    end;
+end;
+
+procedure cargarA(var a:arbol; p:prestamo);
+    procedure agregarAdelante(var l:lista; p:prestamo);
+        var
+            nue:lista;
+        begin
+            new (nue);
+            nue^.dato := p;
+            nue^.sig := l;
+            nue:=l;
+        end;
 var
-    nue:lista;
+    nue:arbol;
 begin
     if (a = nil) 
     then begin
            new(nue);
-           nue^.dato.isbn:= p.isbn; 
-           nue^.dato.cantp:= 1;
+           nue^.isbn:= p.isbn; 
+           nue^.cantp:= 1;
            nue^.HD := nil;
            nue^.Hi := nil;
-           agregarEnLista(nue^.lista,p);
+           nue^.prestamos:=nil;
+           agregarAdelante(nue^.prestamos,p);
          end
     else 
-        if (p.isbn =  a^.dato.isbn) then
+        if (p.isbn =  a^.isbn) then
             begin
-           a^.dato.isbn:= p.isbn; 
-           a^.dato.cantp:= a^.dato.cantp+1;
-           agregarEnLista(a^.lista,p);
-           end
+            a^.cantp:= a^.cantp+1;
+            agregarAdelante(a^.prestamos,p);
+            end
         else 
-            if (p.isbn < a^.dato.isbn) then 
-                Insertarpento(a^.HI, p)
-            else Insertarpento(a^.HD, p); 
+            if (p.isbn < a^.isbn) then 
+                cargarA(a^.HI, p)
+            else 
+                cargarA(a^.HD, p); 
 end;
-procedure cargar(var a:arbol; var a2:arbolp)
+
+procedure cargar(var a:arbol);
+    procedure leer(var p:prestamo);
+    begin
+        Write('isbn: ');
+        read(p.isbn);
+        if (p.isbn <> '-1') then
+        begin
+            Write('casa');
+            read(p.isbn);
+            Write('casa');
+            read(p.isbn);
+            Write('casa');
+            read(p.isbn);   
+         end;
+    end;
 var
-    p:prestamo
+    p:prestamo;
 begin
     leer(p);
-    while (p.ISBN <> -1) do
+    while (p.isbn <> '-1') do
     begin
         cargarA(a,p);
-        generoAp(a2,p);
         leer(p);
     end;
 end;
 var
     a:arbol;
-    a2:arbolp;
 begin
     a:=nil;
-    a2:=nil;
-    cargar(a,a2);
-    mas
+    cargar(a);
+    enRango(a,'12','22');
 end.
